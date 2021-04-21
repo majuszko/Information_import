@@ -14,7 +14,7 @@ Skrypt został napisany przy użyciu Python 3.8, oraz następujących bibliotek:
  
 Sposób uruchomienia:
 
-python main.py [format danych] [nazwa pliku (bez .xml)]
+python main.py [format danych] [ścieżka do pliku (bez .xml)]
 
 Przykłady:
 
