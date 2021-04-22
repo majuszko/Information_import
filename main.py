@@ -1,12 +1,13 @@
 #!/usr/bin/python
 import argparse
 import pandas as pd
-import xml.etree.ElementTree as et
+import xml.etree.ElementTree as eT
 from pathlib import Path
 
-def parse_XML(xml_file, df_cols):
+
+def parse_xml(xml_file, df_cols):
     rows = []
-    it = et.iterparse(xml_file)
+    it = eT.iterparse(xml_file)
     for _, el in it:
         prefix, has_namespace, postfix = el.tag.rpartition('}')
         if has_namespace:
@@ -26,24 +27,44 @@ def parse_XML(xml_file, df_cols):
     out_df = out_df.drop_duplicates(keep='first')
     return out_df
 
-if __name__ == '__main__':
 
+def set_format(form, xmlfile) -> bool:
+    df_cols_aaa = ['flstkennz', 'flaeche', 'landschl', 'kreisschl', 'gmdschl', 'gemaschl']
+    df_cols_nas = ['flurstueckskennzeichen', 'amtlicheFlaeche', 'land', 'kreis', 'gemeinde', 'gemarkungsnummer']
+
+    forms = ['aaa', 'nas']
+
+    if form == forms[0]:
+        print(parse_xml(xmlfile, df_cols_aaa))
+        return True
+    if form == forms[1]:
+        print(parse_xml(xmlfile, df_cols_nas))
+        return True
+    if form not in forms:
+        print('Invalid data format')
+        return False
+
+
+def test_parse_xml():
+    xml = 'testfile.xml'
+    parse = parse_xml(xml, ['to', 'from', 'heading', 'body'])
+    d = {'to': ['Tove'], 'from': ['Jani'], 'heading': ['Reminder'], 'body': ["Don't forget me this weekend!"]}
+    df = pd.DataFrame(data=d)
+    assert parse.equals(df)
+
+
+def test_set_format():
+    assert set_format('aaa', 'testfile.xml')
+    assert not set_format('ooo', 'testfile.xml')
+
+
+if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('type', type=str)
     parser.add_argument('file', type=str)
     args = parser.parse_args()
 
-    type = str(args.type)
+    f = str(args.type)
     file = Path(args.file)
 
-    df_cols_aaa = ["flstkennz", "flaeche", "landschl", "kreisschl", "gmdschl", "gemaschl"]
-    df_cols_nas = ["flurstueckskennzeichen", "amtlicheFlaeche", "land", "kreis", "gemeinde", "gemarkungsnummer"]
-
-    types = ["aaa", "nas"]
-
-    if type==types[0]:
-        print(parse_XML(file, df_cols_aaa))
-    if type==types[1]:
-        print(parse_XML(file, df_cols_nas))
-    if type not in types:
-        print("Invalid data format")
+    set_format(f, file)

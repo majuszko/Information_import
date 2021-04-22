@@ -5,6 +5,7 @@ Napisana została funkcja odpowiadająca za parsowanie pliku XML, oraz przeszuki
 do tablicy. Następnie z powstałe tablice wierszy i kolumn umieszczanie są w dataframie. W zależności od argumentu, który zostanie przekazany w dataframie umieszczane są albo
 kolumny dla jednego formatu albo innego. Obecnie obsługiwane są formaty AAA oraz NAS.
 Kod umożliwia sprawne dodanie kolejnych formatów danych, wystarczy dodać format do tablicy, oraz dopisać nazwy szukanych kolumn.
+Zostały również przeprowadzone dwa testy jednostkowe z pomocą Pytest.
 
 Skrypt został napisany przy użyciu Python 3.8, oraz następujących bibliotek:
  - argparse - do obsługi CLI
@@ -14,7 +15,7 @@ Skrypt został napisany przy użyciu Python 3.8, oraz następujących bibliotek:
  
 Sposób uruchomienia:
 
-python main.py [format danych] [nazwa pliku]
+python main.py [format danych] [ścieżka/nazwa pliku]
 
 Przykłady:
 
