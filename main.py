@@ -22,6 +22,8 @@ def parse_XML(xml_file, df_cols):
         rows.append({df_cols[i]: res[i] for i, _ in enumerate(df_cols)})
     out_df = pd.DataFrame(rows, columns=df_cols)
     out_df = out_df.dropna(how='all')
+    out_df = out_df.fillna(method='ffill').fillna(method='bfill')
+    out_df = out_df.drop_duplicates(keep='first')
     return out_df
 
 if __name__ == '__main__':
@@ -32,7 +34,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     type = str(args.type)
-    file = Path(args.file+".xml")
+    file = Path(args.file)
 
     df_cols_aaa = ["flstkennz", "flaeche", "landschl", "kreisschl", "gmdschl", "gemaschl"]
     df_cols_nas = ["flurstueckskennzeichen", "amtlicheFlaeche", "land", "kreis", "gemeinde", "gemarkungsnummer"]

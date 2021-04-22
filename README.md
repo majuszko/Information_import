@@ -14,10 +14,10 @@ Skrypt został napisany przy użyciu Python 3.8, oraz następujących bibliotek:
  
 Sposób uruchomienia:
 
-python main.py [format danych] [nazwa pliku (bez .xml)]
+python main.py [format danych] [nazwa pliku]
 
 Przykłady:
 
-python main.py aaa parcel_aaa
+python main.py aaa parcel_aaa.xml
 
-python main.py nas parcel_nas
+python main.py nas parcel_nas.xml
